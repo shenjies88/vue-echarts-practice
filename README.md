@@ -1,19 +1,32 @@
-# vue-echarts
+# v-echarts
 
-## Project setup
+# 说明
+
+- `Vue Echarts`工程化学习
+- [前后端项目原链接](https://github.com/iiyuwan/heima-echarts-20210316)
+- [视频教程](https://www.bilibili.com/video/BV1VZ4y1M7ZC?p=49)
+
+## 安装依赖
+
 ```
 npm install
 ```
 
-### Compiles and hot-reloads for development
+### 开发调试
+
 ```
 npm run serve
 ```
 
-### Compiles and minifies for production
+### 生产打包
+
 ```
 npm run build
 ```
 
-### Customize configuration
-See [Configuration Reference](https://cli.vuejs.org/config/).
+### 本地调试生产
+
+```
+npm run build
+npm node-app
+```
