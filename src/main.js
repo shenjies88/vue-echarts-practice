@@ -5,6 +5,7 @@ import store from './store'
 import '@/assets/css/global.css'
 import '@/assets/js/chalk'
 import '@/assets/js/vintage'
+import '@/assets/font/iconfont.css'
 import '@/config/echartsConfig'
 
 Vue.config.productionTip = false
