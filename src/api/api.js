@@ -6,5 +6,8 @@ export default {
     },
     trend: function () {
         return axiosConfig.get('/trend')
+    },
+    map: function () {
+        return axiosConfig.get('/map')
     }
 }
