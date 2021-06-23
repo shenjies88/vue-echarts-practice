@@ -15,5 +15,8 @@ export default {
     },
     hot: function () {
         return axiosConfig.get('/hot')
+    },
+    stock: function () {
+        return axiosConfig.get('/stock')
     }
 }
