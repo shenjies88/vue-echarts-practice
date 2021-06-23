@@ -12,5 +12,8 @@ export default {
     },
     rank: function () {
         return axiosConfig.get('/rank')
+    },
+    hot: function () {
+        return axiosConfig.get('/hot')
     }
 }
