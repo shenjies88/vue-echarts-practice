@@ -125,7 +125,18 @@ export default {
       this.echartsInstant.setOption(dataOption)
     },
     screenAdapter() {
-      const adapterOption = {}
+      const titleFontSize = this.$refs.rankRef.offsetWidth / 100 * 3.6
+      const adapterOption = {
+        title: {
+          textStyle: {
+            fontSize: titleFontSize
+          }
+        },
+        barWidth: titleFontSize,
+        itemStyle: {
+          borderRadius: [titleFontSize / 2, titleFontSize / 2, 0, 0]
+        }
+      }
       this.echartsInstant.setOption(adapterOption)
       this.echartsInstant.resize()
     },
