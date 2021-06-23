@@ -9,5 +9,8 @@ export default {
     },
     map: function () {
         return axiosConfig.get('/map')
+    },
+    rank: function () {
+        return axiosConfig.get('/rank')
     }
 }
