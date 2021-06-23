@@ -12,7 +12,10 @@ export default {
   data() {
     return {
       allData: null,
-      echartsInstant: null
+      echartsInstant: null,
+      startValue: 0,
+      endValue: 9,
+      updateZooInterval: null
     }
   },
   mounted() {
@@ -23,11 +26,17 @@ export default {
   },
   destroyed() {
     window.removeEventListener('resize', this.screenAdapter)
+    clearInterval(this.updateZooInterval)
   },
   methods: {
     initChart() {
       this.echartsInstant = this.$echarts.init(this.$refs.rankRef, 'chalk')
       const initOption = {
+        dataZoom: {
+          show: false,
+          startValue: this.startValue,
+          endValue: this.endValue,
+        },
         title: {
           text: '| 销售排行',
           top: 20,
@@ -52,6 +61,12 @@ export default {
         }]
       }
       this.echartsInstant.setOption(initOption)
+      this.echartsInstant.on("mouseover", () => {
+        clearInterval(this.updateZooInterval)
+      });
+      this.echartsInstant.on("mouseout", () => {
+        this.startInterval();
+      })
     },
     async getData() {
       this.allData = await api.rank()
@@ -59,6 +74,7 @@ export default {
         return b.value - a.value
       })
       this.updateChart()
+      this.startInterval()
     },
     updateChart() {
       const nameArr = this.allData.map(item => {
@@ -73,6 +89,10 @@ export default {
         ["#5052EE", "#AB6EE5"],
       ]
       const dataOption = {
+        dataZoom: {
+          startValue: this.startValue,
+          endValue: this.endValue,
+        },
         xAxis: {
           data: nameArr
         },
@@ -108,6 +128,20 @@ export default {
       const adapterOption = {}
       this.echartsInstant.setOption(adapterOption)
       this.echartsInstant.resize()
+    },
+    startInterval() {
+      if (this.updateZooInterval) {
+        clearInterval(this.updateZooInterval)
+      }
+      this.updateZooInterval = setInterval(() => {
+        this.startValue++
+        this.endValue++
+        if (this.endValue > this.allData.length - 1) {
+          this.startValue = 0
+          this.endValue = 9
+        }
+        this.updateChart()
+      }, 2000)
     }
   }
 }
