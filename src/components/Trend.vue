@@ -14,7 +14,6 @@
 </template>
 
 <script>
-import api from "@/api/api";
 
 export default {
   name: "Trend",
@@ -53,13 +52,22 @@ export default {
       }
     }
   },
+  created() {
+    this.$socket.registerCallBack("trendData", this.getData)
+  },
   mounted() {
     this.initChart()
-    this.getData()
+    this.$socket.send({
+      action: "getData",
+      socketType: "trendData",
+      chartName: "trend",
+      value: "",
+    })
     window.addEventListener('resize', this.screenAdapter)
     this.screenAdapter()
   },
   destroyed() {
+    this.$socket.unregisterCallBack("trendData")
     window.removeEventListener('resize', this.screenAdapter)
   },
   methods: {
@@ -96,8 +104,8 @@ export default {
       }
       this.echartsInstant.setOption(initOption)
     },
-    async getData() {
-      this.allData = await api.trend()
+    getData(data) {
+      this.allData = data
       this.updateChart()
     },
     screenAdapter() {
