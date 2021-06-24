@@ -5,7 +5,6 @@
 </template>
 
 <script>
-import api from "@/api/api";
 
 export default {
   name: "Rank",
@@ -18,13 +17,22 @@ export default {
       updateZooInterval: null
     }
   },
+  created() {
+    this.$socket.registerCallBack("rankData", this.getData)
+  },
   mounted() {
     this.initChart()
-    this.getData()
+    this.$socket.send({
+      action: "getData",
+      socketType: "rankData",
+      chartName: "rank",
+      value: "",
+    })
     window.addEventListener('resize', this.screenAdapter)
     this.screenAdapter()
   },
   destroyed() {
+    this.$socket.unregisterCallBack("rankData")
     window.removeEventListener('resize', this.screenAdapter)
     clearInterval(this.updateZooInterval)
   },
@@ -68,8 +76,8 @@ export default {
         this.startInterval();
       })
     },
-    async getData() {
-      this.allData = await api.rank()
+    getData(data) {
+      this.allData = data
       this.allData.sort((a, b) => {
         return b.value - a.value
       })

@@ -8,7 +8,6 @@
 </template>
 
 <script>
-import api from "@/api/api";
 
 export default {
   name: "Hot",
@@ -25,6 +24,9 @@ export default {
       }
     }
   },
+  created() {
+    this.$socket.registerCallBack("hotData", this.getData)
+  },
   computed: {
     titleName() {
       if (!this.allData) {
@@ -35,11 +37,17 @@ export default {
   },
   mounted() {
     this.initChart()
-    this.getData()
+    this.$socket.send({
+      action: "getData",
+      socketType: "hotData",
+      chartName: "hot",
+      value: "",
+    })
     window.addEventListener('resize', this.screenAdapter)
     this.screenAdapter()
   },
   destroyed() {
+    this.$socket.unregisterCallBack("hotData")
     window.removeEventListener('resize', this.screenAdapter)
   },
   methods: {
@@ -78,8 +86,8 @@ export default {
       }
       this.echartsInstant.setOption(initOption)
     },
-    async getData() {
-      this.allData = await api.hot()
+    getData(data) {
+      this.allData = data
       this.updateChart()
     },
     updateChart() {
