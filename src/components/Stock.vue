@@ -12,7 +12,9 @@ export default {
   data() {
     return {
       allData: null,
-      echartsInstant: null
+      echartsInstant: null,
+      currentIndex: 0,
+      timerId: null
     }
   },
   mounted() {
@@ -23,6 +25,7 @@ export default {
   },
   destroyed() {
     window.removeEventListener('resize', this.screenAdapter)
+    clearInterval(this.timerId)
   },
   methods: {
     initChart() {
@@ -35,13 +38,22 @@ export default {
         }
       }
       this.echartsInstant.setOption(initOption)
+      this.echartsInstant.on("mouseover", () => {
+        clearInterval(this.timerId);
+      });
+      this.echartsInstant.on("mouseout", () => {
+        this.startInterval();
+      });
     },
     async getData() {
       this.allData = await api.stock()
       this.updateChart()
+      this.startInterval()
     },
     updateChart() {
-      const showData = this.allData.slice(0, 5);
+      const start = this.currentIndex * 5
+      const end = (this.currentIndex + 1) * 5
+      const showData = this.allData.slice(start, end);
       const centerArr = [
         ["18%", "40%"],
         ["50%", "40%"],
@@ -104,6 +116,15 @@ export default {
       const adapterOption = {}
       this.echartsInstant.setOption(adapterOption)
       this.echartsInstant.resize()
+    },
+    startInterval() {
+      if (this.timerId) {
+        clearInterval(this.timerId)
+      }
+      this.timerId = setInterval(() => {
+        this.currentIndex = ++this.currentIndex % 2
+        this.updateChart()
+      }, 3000)
     }
   }
 }
