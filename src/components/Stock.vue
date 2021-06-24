@@ -113,7 +113,53 @@ export default {
       this.echartsInstant.setOption(dataOption)
     },
     screenAdapter() {
-      const adapterOption = {}
+      const titleFontSize = (this.$refs.stockRef.offsetWidth / 100) * 3.6
+      const innerRadius = this.titleFontSize * 2.7
+      const outerRadius = innerRadius * 1.125
+      const adapterOption = {
+        title: {
+          textStyle: {
+            fontSize: titleFontSize,
+          },
+        },
+        series: [
+          {
+            type: "pie",
+            radius: [innerRadius, outerRadius],
+            label: {
+              fontSize: (titleFontSize / 6) * 3,
+            },
+          },
+          {
+            type: "pie",
+            radius: [innerRadius, outerRadius],
+            label: {
+              fontSize: (titleFontSize / 6) * 3,
+            },
+          },
+          {
+            type: "pie",
+            radius: [innerRadius, outerRadius],
+            label: {
+              fontSize: (titleFontSize / 6) * 3,
+            },
+          },
+          {
+            type: "pie",
+            radius: [innerRadius, outerRadius],
+            label: {
+              fontSize: (titleFontSize / 6) * 3,
+            },
+          },
+          {
+            type: "pie",
+            radius: [innerRadius, outerRadius],
+            label: {
+              fontSize: (titleFontSize / 6) * 3,
+            },
+          },
+        ]
+      }
       this.echartsInstant.setOption(adapterOption)
       this.echartsInstant.resize()
     },
