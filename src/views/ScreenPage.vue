@@ -20,8 +20,10 @@
     <div class="body">
       <!--左侧-->
       <div class="body-left">
-        <div class="char-con body-left-top">
-          <Trend></Trend>
+        <div :class="['char-con', 'body-left-top', this.fullScreenStatus.trend ? 'fullscreen' : '']">
+          <Trend ref="trend"></Trend>
+          <span @click="changeSize('trend')"
+                :class="['iconfont', this.fullScreenStatus.trend ?  'icon-compress-alt' : 'icon-expand-alt']"></span>
         </div>
         <div class="char-con body-left-bottom">
           <Seller></Seller>
@@ -63,7 +65,15 @@ export default {
   data() {
     return {
       dateTime: new Date(),
-      dateTimeId: null
+      dateTimeId: null,
+      fullScreenStatus: {
+        hot: false,
+        map: false,
+        rank: false,
+        seller: false,
+        stock: false,
+        trend: false
+      }
     }
   },
   created() {
@@ -76,12 +86,30 @@ export default {
   },
   destroyed() {
     clearInterval(this.dateTimeId)
+  },
+  methods: {
+    changeSize(name) {
+      this.fullScreenStatus[name] = !this.fullScreenStatus[name]
+      this.$nextTick(() => {
+        this.$refs[name].screenAdapter()
+      })
+    }
   }
 
 }
 </script>
 
 <style lang="less" scoped>
+.fullscreen {
+  position: fixed !important;
+  top: 0 !important;
+  left: 0 !important;
+  width: 100% !important;
+  height: 100% !important;
+  margin: 0 !important;
+  z-index: 100;
+}
+
 .container {
   height: 100%;
   background: #161525;
@@ -120,11 +148,19 @@ export default {
 
     .char-con {
       position: relative;
+
+      > span {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        color: white;
+        cursor: pointer;
+      }
     }
 
     .body-left {
       height: 100%;
-      width: 30%;
+      width: 29%;
 
       .body-left-top {
         height: 50%;
@@ -139,7 +175,6 @@ export default {
     .body-mid {
       height: 100%;
       width: 40%;
-      margin: 0 20px;
 
       .body-mid-top {
         height: 55%;
@@ -153,7 +188,7 @@ export default {
 
     .body-right {
       height: 100%;
-      width: 30%;
+      width: 29%;
 
       .body-right-top {
         height: 50%;
