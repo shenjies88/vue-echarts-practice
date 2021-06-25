@@ -8,6 +8,7 @@
 import axios from "axios";
 import {getProvinceMapInfo} from '@/utils/mapUtil'
 import api from "@/api/api";
+import config from "@/config/config";
 
 export default {
   name: "Map",
@@ -38,7 +39,7 @@ export default {
     },
     async initChart() {
       this.echartsInstant = this.$echarts.init(this.$refs.mapRef, 'chalk')
-      const chinaJson = await axios.get('http://localhost:8999/static/map/china.json')
+      const chinaJson = await axios.get(`${config[process.env.NODE_ENV].mapBaseURL}/static/map/china.json`)
       //注册地图
       this.$echarts.registerMap('china', chinaJson)
       const initOption = {
@@ -67,7 +68,7 @@ export default {
       this.echartsInstant.on('click', async arg => {
         const provinceInfo = getProvinceMapInfo(arg.name)
         if (!this.mapData[provinceInfo.key]) {
-          const provinceData = await axios.get(`http://localhost:8999${provinceInfo.path}`)
+          const provinceData = await axios.get(`${config[process.env.NODE_ENV].mapBaseURL}${provinceInfo.path}`)
           this.mapData[provinceInfo.key] = provinceData
           this.$echarts.registerMap(provinceInfo.key, provinceData)
         }

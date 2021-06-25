@@ -3,6 +3,7 @@
   "version": "0.1.0",
   "private": true,
   "scripts": {
+    "node-app": "node app.js",
     "ui": "vue ui",
     "serve": "vue-cli-service serve",
     "build": "vue-cli-service build"

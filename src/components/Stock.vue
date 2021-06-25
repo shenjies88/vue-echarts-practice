@@ -105,7 +105,7 @@ export default {
               }
             },
             {
-              name: item.name + '\n' + item.sales,
+              name: item.name + '\n\n' + item.sales,
               value: item.stock,
               itemStyle: {
                 color: "#333843",
