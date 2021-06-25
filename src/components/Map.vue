@@ -7,6 +7,7 @@
 <script>
 import axios from "axios";
 import {getProvinceMapInfo} from '@/utils/mapUtil'
+import api from "@/api/api";
 
 export default {
   name: "Map",
@@ -17,22 +18,13 @@ export default {
       mapData: {}
     }
   },
-  created() {
-    this.$socket.registerCallBack("mapData", this.getData)
-  },
   mounted() {
     this.initChart()
-    this.$socket.send({
-      action: "getData",
-      socketType: "mapData",
-      chartName: "map",
-      value: "",
-    })
+    this.getData()
     window.addEventListener('resize', this.screenAdapter)
     this.screenAdapter()
   },
   destroyed() {
-    this.$socket.unregisterCallBack("mapData")
     window.removeEventListener('resize', this.screenAdapter)
   },
   methods: {
@@ -87,8 +79,8 @@ export default {
         this.echartsInstant.setOption(changeOption)
       })
     },
-    getData(data) {
-      this.allData = data
+    async getData() {
+      this.allData = await api.map()
       this.updateChart()
     },
     updateChart() {

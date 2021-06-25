@@ -115,7 +115,8 @@ export default {
   .body {
     height: 100%;
     margin-top: 15px;
-    overflow: hidden;
+    display: flex;
+    justify-content: space-between;
 
     .char-con {
       position: relative;
@@ -124,8 +125,6 @@ export default {
     .body-left {
       height: 100%;
       width: 30%;
-      margin-right: 25px;
-      float: left;
 
       .body-left-top {
         height: 50%;
@@ -139,9 +138,8 @@ export default {
 
     .body-mid {
       height: 100%;
-      width: 37%;
-      float: left;
-      margin-right: 20px;
+      width: 40%;
+      margin: 0 20px;
 
       .body-mid-top {
         height: 55%;
@@ -156,7 +154,6 @@ export default {
     .body-right {
       height: 100%;
       width: 30%;
-      float: right;
 
       .body-right-top {
         height: 50%;
