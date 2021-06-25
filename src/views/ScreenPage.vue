@@ -132,6 +132,7 @@ export default {
     .head-right {
       margin-top: auto;
       margin-bottom: auto;
+      width: 190px;
 
       span {
         color: white;
@@ -159,9 +160,7 @@ export default {
     }
 
     .body-left {
-      height: 100%;
       width: 29%;
-
       .body-left-top {
         height: 50%;
       }
@@ -173,7 +172,6 @@ export default {
     }
 
     .body-mid {
-      height: 100%;
       width: 40%;
 
       .body-mid-top {
@@ -187,7 +185,6 @@ export default {
     }
 
     .body-right {
-      height: 100%;
       width: 29%;
 
       .body-right-top {
