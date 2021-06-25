@@ -136,7 +136,7 @@ export default {
           itemHeight: titleFontSize,
           itemGap: titleFontSize / 2,
           textStyle: {
-            fontSize: titleFontSize - 20,
+            fontSize: titleFontSize - 10,
           },
         },
         series: [{

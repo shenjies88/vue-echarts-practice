@@ -80,7 +80,6 @@ export default {
         return {
           type: 'pie',
           hoverAnimation: false,
-          radius: [110, 100],
           center: centerArr[index],
           labelLine: {
             show: false
@@ -122,7 +121,7 @@ export default {
     },
     screenAdapter() {
       const titleFontSize = (this.$refs.stockRef.offsetWidth / 100) * 3.6
-      const innerRadius = this.titleFontSize * 2.7
+      const innerRadius = titleFontSize * 2.7
       const outerRadius = innerRadius * 1.125
       const adapterOption = {
         title: {
